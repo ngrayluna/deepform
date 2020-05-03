@@ -136,16 +136,16 @@ def load_training_data_nocache(config):
             n = config.window_len - 1
             
             token_padding = ['' for i in range(n)]
-            token_row.insert(0, token_padding)
-            token_row.append(token_padding)
+            token_row = token_padding + token_row
+            token_row.extend(token_padding)
 
             feature_padding = [token_features(None, None) for i in range(n)]
-            feature_row.insert(0, feature_padding)
-            feature_row.append(feature_padding)
+            feature_row = feature_padding + feature_row
+            feature_row.extend(feature_padding)
 
             label_padding = [0 for i in range(n)]
-            label_row.insert(0, label_padding)
-            label_row.append(label_padding)
+            label_row = label_padding + label_row
+            label_row.extend(label_padding)
 
         # Slugs and token text are not training data, but used for evaluating results later
         slugs.append(doc_tokens[0]['slug']) # unique document ID, also PDF filename
